@@ -12,19 +12,26 @@ class Trie:
     def add(self, s, value):
         """Add the string `s` to the 
         `Trie` and map it to the given value."""
+        # for some reason this doesn't add the value 0
+        # any other number you use as the input vaule, 
+        # that number will be used (haven't tried negatives)
+        # but if 0 leaves as None. This is curious, and I 
+        # wonder why, but not my biggest headache at the 
+        # moment...
+        
         head, tail = s[0], s[1:]
-        print tail
+        #print 'tail',tail
         cur_node = self.root[head]
         cur_node.count += 1
         if not tail:
-            print 'not tail'
-            print 'return',value
-            print cur_node.value
-            print cur_node.count
+            #print 'not tail'
+            #print 'return',value
+            #print cur_node.value
+            #print cur_node.count
             cur_node.value = value
-            print 'new count', cur_node.count
+            #print 'new count', cur_node.count
             return  # No further recursion
-        print value
+        #print value
         self.root[head].add(tail, value)
 
     def lookup(self, s, default=None):
@@ -88,13 +95,17 @@ class Trie:
         for char, node in self.root.iteritems():
             # node.value is none when not at end of word
             if node.value is None:
-                print 'none'
-                print 'char',char
-                print 'node',node
-                yield node.items()
+                #print 'none'
+                #print 'char',char
+                #print 'node',node
+                yield char
+                for i in node.items():
+                    #print 'i',i
+                    yield i
             else:
-                print 'stuff'
-                yield node
+                #print 'else'
+                #print char
+                yield char
 
 
 
