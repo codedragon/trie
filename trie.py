@@ -89,7 +89,7 @@ class Trie:
         #return node.max(depth = 
 
     def words(self, path = [], prefix = []):
-        """Return an iterator over the items (words) of the `Trie`."""
+        """Return an iterator over the items (words) of the 'Trie'."""
         word = False
         for char, node in self.root.iteritems():
             prefix.append(char)
@@ -98,7 +98,8 @@ class Trie:
             # we should subtract 1 word from the node path (1 down, how
             # many to go?!)
             if node.value:
-                yield ''.join(prefix), node.value
+                yield ''.join(prefix)
+                #yield ''.join(prefix), node.value
                 for x,y in enumerate(path):
                         path[x] = y - 1
 
@@ -143,21 +144,4 @@ class Trie:
                 print "end of word", node.value
             for i in node.items():
                 yield i
-
-            #if node.value is None:
-                #print 'none'
-                #print 'char',char
-                #print 'node.count', node.count
-                #yield char
-                #for i in node.items():
-                    #print 'inner'
-                    #print 'i',i
-                    #yield i
-            #else:
-                #print 'else'
-                #print 'value', node.value
-                #print 'char', char
-                #yield char
-
-
 
