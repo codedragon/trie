@@ -88,61 +88,25 @@ class Trie:
         #    run_max = depth * (count - 1)
         #return node.max(depth = 
 
-    def words(self, path = [], prefix = []):
-        """Return an iterator over the items (words) of the `Trie`."""
-        word = False
-        for char, node in self.root.iteritems():
-            prefix.append(char)
-            path.append(node.count)
-            # if there is a node.value, then we are at the end of a word
-            # we should subtract 1 word from the node path (1 down, how
-            # many to go?!)
-            if node.value:
-                yield ''.join(prefix), node.value
-                for x,y in enumerate(path):
-                        path[x] = y - 1
 
-            # if we are at the end of a word and the count is 1, 
-            # we are at the end of a branch, and it is time to 
-            # delete letters back to the last branch we haven't 
-            # gone down yet.
-            #if word and node.count == 1:
-            if node.value and node.count == 1:
-                # once a letter hits zero words (in path), we can get
-                # get rid it. Search backwards to find all zeros. Shouldn't
-                # be any zeros in the beginning of path, but at this point, we
-                # know we only want the zeros at the end
-                visited = 0
-                for i in reversed(path):
-                    if i == 0:
-                        visited += 1
-                    else:
-                        break
-                #print 'visited',visited
-                # visited is how many letters gets us back to last branch
-                if path[-1] == 0:
-                    for j in range(visited):
-                        #print 'popped loop'
-                        del path[-1]
-                        del prefix[-1]
-                    
-            for i in node.words():
-                #print 'i',i 
-                yield i
-
+ 
     def items(self):
         """Return an iterator over the items of the `Trie`."""
-        for char, node in self.root.iteritems():
+        for char, node in self.root.items():
             # node.value is none when not at end of word
             # currently goes down each path until it finds a word, then 
             # starts down another path. Need a way to tell if last word
-            #print 'top of function, yielding char,', char
+            print('top of function')
             yield char
-            #print 'yielded char,',char
+            print('yielded char',char)
             if node.value:
-                print "end of word", node.value
-            for i in node.items():
-                yield i
+                print("end of word", node.value)
+            yield from node.items()
+            print('yielded from node.items')
+            #for i in node.items():
+            #    print 'i-node loop'
+            #    yield i
+            #    print 'yielded i',i
 
             #if node.value is None:
                 #print 'none'
