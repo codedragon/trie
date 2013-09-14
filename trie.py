@@ -90,7 +90,6 @@ class Trie:
 
     def words(self, path = [], prefix = []):
         """Return an iterator over the items (words) of the 'Trie'."""
-        word = False
         for char, node in self.root.iteritems():
             prefix.append(char)
             path.append(node.count)
@@ -113,19 +112,20 @@ class Trie:
                 # get rid it. Search backwards to find all zeros. Shouldn't
                 # be any zeros in the beginning of path, but at this point, we
                 # know we only want the zeros at the end
-                visited = 0
-                for i in reversed(path):
-                    if i == 0:
-                        visited += 1
-                    else:
-                        break
+                #visited = 0
+                #for i in reversed(path):
+                #    if i == 0:
+                #        visited += 1
+                #    else:
+                #        break
                 #print 'visited',visited
                 # visited is how many letters gets us back to last branch
-                if path[-1] == 0:
-                    for j in range(visited):
-                        #print 'popped loop'
-                        del path[-1]
-                        del prefix[-1]
+                #if path[-1] == 0:
+                    #for j in range(visited):
+                for j in range(path.count(0)):
+                    #print 'popped loop'
+                    del path[-1]
+                    del prefix[-1]
                     
             for i in node.words():
                 #print 'i',i 

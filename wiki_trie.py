@@ -1,3 +1,4 @@
+# version copied from Trie entry of wikipedia.
 from collections import defaultdict
  
 class Trie:

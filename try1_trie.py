@@ -1,5 +1,7 @@
+# First version of words method for website, only collects the letters, 
+# so spits out ever-larger words as it iterates through the Trie.
+
 from collections import defaultdict
-# implementation for python3, possibly not using all of the great advances of python3 yet.
  
 class Trie:
     def __init__(self):
@@ -78,30 +80,16 @@ class Trie:
         #if depth * (count - 1) > run_max:
         #    run_max = depth * (count - 1)
         #return node.max(depth = 
- 
-    def words(self, path=[], prefix=[]):
-        """Return an iterator over the items of the `Trie`."""
-        for char, node in self.root.items():
-            prefix.append(char)
-            path.append(node.count)
 
-            # if there is a node.value, then we are at the end of a word
-            # we should subtract 1 (word!) from the entire node path 
+    def words(self, prefix = []):
+        """Return an iterator over the items (words) of the 'Trie'."""
+        word = False
+        for char, node in self.root.iteritems():
+            prefix.append(char)
             if node.value:
                 yield ''.join(prefix)
-                for x,y in enumerate(path):
-                    path[x] = y - 1
-
-            # if we are at the end of a word and the count is 1, 
-            # we are at the end of a branch, and it is time to 
-            # delete letters (and corresponding numbers in path)
-            # back to the last branch we haven't gone down yet.
-            if node.value and node.count == 1:
-                 for j in range(path.count(0)):
-                     del path[-1]
-                     del prefix[-1]
-            
-            yield from node.words()
+            for i in node.words():
+                yield i
 
     def items(self):
         """Return an iterator over the items of the `Trie`."""
@@ -113,7 +101,7 @@ class Trie:
             yield char
             #print 'yielded char,',char
             if node.value:
-                print("end of word", node.value)
-            yield from node.items()
-
+                print "end of word", node.value
+            for i in node.items():
+                yield i
 
